@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+- name: 'dmarc-ag'
+  type: 'elasticsearch'
+  access: 'proxy'
+  orgId: 1
+  url: 'http://elasticsearch:9200'
+  database: '[dmarc_aggregate-]YYYY-MM-DD'
+  isDefault: true
+  jsonData:
+    esVersion: 70
+    timeField: 'date_range'
+    interval: 'Daily'
+  version: 1
+  editable: false
