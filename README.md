@@ -6,7 +6,7 @@ Analyse and visualize DMARC results using open-source tools.
 * [Elasticsearch](https://www.elastic.co/) to store aggregated data.
 * [Grafana](https://grafana.com/) to visualize the aggregated reports.
 
-See the full blog post with instructions at https://debricked.com/blog/some-url-here.
+See the full blog post with instructions at https://debricked.com/blog/2020/05/14/analyse-and-visualize-dmarc-results-using-open-source-tools/.
 
 ## Screenshot
 
