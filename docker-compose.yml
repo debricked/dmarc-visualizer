@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.5'
 services:
   parsedmarc:
     build: ./parsedmarc/
@@ -11,7 +11,7 @@ services:
     restart: on-failure
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
     environment:
       - discovery.type=single-node
 
@@ -19,6 +19,7 @@ services:
     build: ./grafana/
     ports:
       - 3000:3000
+    user: root
     environment:
       GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
