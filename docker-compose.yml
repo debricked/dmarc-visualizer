@@ -11,6 +11,7 @@ services:
     restart: on-failure
 
   elasticsearch:
+#for usage on Odroid/Rasperry Pi add -arm64 after version number (btw prob. just use latest, you have to specify one)  
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
     environment:
       - discovery.type=single-node
