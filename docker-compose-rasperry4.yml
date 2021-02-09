@@ -1,0 +1,27 @@
+#Tested with Rasperry Pi 4B 8GB running Ubuntu Server 20.10
+ 
+version: '3.7'
+services:
+  parsedmarc:
+    build: ./parsedmarc/
+    volumes:
+      - ./files:/input:ro
+      - ./output_files:/output
+    command: parsedmarc -c /parsedmarc.ini /input/*
+    depends_on:
+      - elasticsearch
+    restart: on-failure
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2-arm64
+    environment:
+      - discovery.type=single-node
+
+  grafana:
+    build: ./grafana/
+    ports:
+      - 3000:3000
+    user: root
+    environment:
+      GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
