@@ -12,9 +12,9 @@ See the full blog post with instructions at https://debricked.com/blog/2020/05/1
 
 To me this is the perfect project for a constantly watching Rasperry Pi. These steps for initial setup have been working fine for me on a Rasperry Pi 4 8GB:
 
-*Install OS: Ubuntu Server 20.10 - run all the updates
-*Install Docker - taken from https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04 and https://askubuntu.com/questions/1288835/how-to-install-docker-on-ubuntu-20-10
-*Install latest docker-compose Version - Taken from https://ovks.de/2020/05/how-to-install-newest-docker-compose-on-a-raspberry-pi-ubuntu-aarch64/
+* Install OS: Ubuntu Server 20.10 - run all the updates
+* Install Docker - taken from https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04 and https://askubuntu.com/questions/1288835/how-to-install-docker-on-ubuntu-20-10
+* Install latest docker-compose Version - Taken from https://ovks.de/2020/05/how-to-install-newest-docker-compose-on-a-raspberry-pi-ubuntu-aarch64/
     
 First, update your existing list of packages:
     
