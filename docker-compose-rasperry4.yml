@@ -24,4 +24,12 @@ services:
     user: root
     environment:
       GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
-      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+# Set this to true to not require login
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_AUTH_ANONYMOUS_HIDE_VERSION: 'false'
+      GF_AUTH_ANONYMOUS_ORG_NAME: DMARC-Reports
+# Change Password to your taste. But CHANGE IT. Delete line for standard login credentials
+      GF_SECURITY_ADMIN_PASSWORD: PASSWORD
+# Opens Dashboard on login instead of manually selecting it
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/Grafana-DMARC_Reports.json
+      
