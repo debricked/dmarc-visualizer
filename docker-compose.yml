@@ -11,7 +11,7 @@ services:
     restart: on-failure
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
     environment:
       - discovery.type=single-node
 
