@@ -14,3 +14,16 @@ datasources:
     interval: 'Daily'
   version: 1
   editable: false
+- name: 'dmarc-fo'
+  type: 'elasticsearch'
+  access: 'proxy'
+  orgId: 1
+  url: 'http://elasticsearch:9200'
+  database: '[dmarc_forensic-]YYYY-MM-DD'
+  isDefault: false
+  jsonData:
+    esVersion: 70
+    timeField: 'arrival_date'
+    interval: 'Daily'
+  version: 1
+  editable: false
