@@ -11,3 +11,11 @@ See the full blog post with instructions at https://debricked.com/blog/2020/05/1
 ## Screenshot
 
 ![Screenshot of Grafana dashboard](/big_screenshot.png?raw=true)
+
+## Step-by-step
+
+```
+git clone https://github.com/debricked/dmarc-visualizer
+cd dmarc-visualizer
+docker-compose -f ./docker-compose.yml --verbose up
+```
