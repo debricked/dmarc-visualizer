@@ -19,6 +19,11 @@ To me this is the perfect project for a constantly watching Rasperry Pi. These s
 First, update your existing list of packages:
     
     sudo apt update && sudo apt upgrade
+  
+ On a Raspberry Pi you might need to install 
+ 
+ `sudo apt install linux-modules-extra-raspi`
+ 
  Next, install a few prerequisite packages which let apt use packages over HTTPS:
  
     sudo apt install apt-transport-https ca-certificates curl software-properties-common
