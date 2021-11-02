@@ -1,0 +1,36 @@
+#Rename this file docker-compose.yml before use
+#Tested with Rasperry Pi 4B 8GB running Ubuntu Server 20.10
+ 
+version: '3.7'
+services:
+  parsedmarc:
+    build: ./parsedmarc/
+    volumes:
+      - ./files:/input:ro
+      - ./output_files:/output
+    command: parsedmarc -c /parsedmarc.ini /input/*
+    depends_on:
+      - elasticsearch
+    restart: on-failure
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0-arm64
+    environment:
+      - discovery.type=single-node
+
+  grafana:
+    build: ./grafana/
+    ports:
+      - 3000:3000
+    user: root
+    environment:
+      GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
+# Set this to true to not require login
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_AUTH_ANONYMOUS_HIDE_VERSION: 'false'
+      GF_AUTH_ANONYMOUS_ORG_NAME: DMARC-Reports
+# Change Password to your taste. But CHANGE IT. Delete line for standard login credentials
+      GF_SECURITY_ADMIN_PASSWORD: PASSWORD
+# Opens Dashboard on login instead of manually selecting it
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/Grafana-DMARC_Reports.json
+      
