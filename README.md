@@ -88,3 +88,11 @@ Download the files in this repo and navigate to the extracted folder, first into
 ## Screenshot
 
 ![Screenshot of Grafana dashboard](/big_screenshot.png?raw=true)
+
+
+## Step-by-step
+```
+git clone https://github.com/aleksandarristic/dmarc-visualiser
+cd dmarc-visualiser
+docker-compose -f ./docker-compose.yml --verbose up
+```
