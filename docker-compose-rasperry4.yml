@@ -10,13 +10,29 @@ services:
       - ./output_files:/output
     command: parsedmarc -c /parsedmarc.ini /input/*
     depends_on:
-      - elasticsearch
-    restart: on-failure
+      elasticsearch:
+         condition: service_healthy
+    restart: always
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0-arm64
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2-arm64
     environment:
+      - cluster.name=parsedmarc
       - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false # required to prevent warnings in kibana dashboard. Security is not required as we're only operating docker-internally
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    restart: always
+    healthcheck:
+      test: [ "CMD", "curl","-s" ,"-f", "http://localhost:9200/_cat/health" ]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   grafana:
     build: ./grafana/
