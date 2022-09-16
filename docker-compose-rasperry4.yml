@@ -15,7 +15,7 @@ services:
     restart: always
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2-arm64
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.1-arm64
     environment:
       - cluster.name=parsedmarc
       - discovery.type=single-node
