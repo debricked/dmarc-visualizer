@@ -11,7 +11,7 @@ datasources:
   jsonData:
     esVersion: 70
     timeField: 'date_range'
-    interval: 'Daily'
+    fixed_interval: 'd'
   version: 1
   editable: false
 - name: 'dmarc-fo'
@@ -24,6 +24,6 @@ datasources:
   jsonData:
     esVersion: 70
     timeField: 'arrival_date'
-    interval: 'Daily'
+    fixed_interval: 'd'
   version: 1
   editable: false
