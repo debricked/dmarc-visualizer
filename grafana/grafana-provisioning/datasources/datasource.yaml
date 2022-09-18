@@ -13,7 +13,7 @@ datasources:
     timeField: 'date_range'
     fixed_interval: 'd'
   version: 1
-  editable: false
+  editable: true
 - name: 'dmarc-fo'
   type: 'elasticsearch'
   access: 'proxy'
@@ -26,4 +26,4 @@ datasources:
     timeField: 'arrival_date'
     fixed_interval: 'd'
   version: 1
-  editable: false
+  editable: true
