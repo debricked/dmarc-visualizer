@@ -1,6 +1,6 @@
 FROM python:alpine
 
-RUN apk add build-base libxml2-dev libxslt-dev \
+RUN apk add build-base libxml2-dev libxslt-dev libffi-dev \
     && pip install parsedmarc
 
 COPY parsedmarc.ini /
