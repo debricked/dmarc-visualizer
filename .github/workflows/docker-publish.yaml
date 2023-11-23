@@ -1,0 +1,89 @@
+name: Parsedmarc Container Build
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - mb/EO-166-parsedmarc
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.OCTOPUS_DEPLOY_GOOGLE_SC_KEY }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - name: Configure GCR Auth
+        run: |
+          gcloud auth configure-docker gcr.io -q
+
+      # Workaround: https://github.com/docker/build-push-action/issues/461
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+
+
+      - name: Calculate version tag
+        id: version
+        run: echo "timestamp=$(date '+%Y%m%d.%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        id: build-and-push-parsedmarc
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: .
+          push: true
+          file: parsedmarc/Dockerfile
+          tags: gcr.io/tradewind-production/parsedmarc:${{ steps.version.outputs.timestamp }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Install Octopus CLI
+        uses: OctopusDeploy/install-octopus-cli-action@v1
+        with:
+          version: latest
+
+      - name: Prepare Octopus deployment
+        run: mkdir -p octopus/dist && echo ${{ steps.version.outputs.timestamp }} > octopus/dist/parsedmarc.version
+
+      - name: Create output dir
+        run: mkdir output/
+
+      - name: Generate Octopus Deploy build information
+        uses: xo-energy/action-octopus-build-information@v1
+        with:
+          octopus_api_key: ${{ secrets.OCTOPUS_API_KEY }}
+          octopus_server: https://tradewind.octopus.app
+          octopus_project: parsedmarc
+          octopus_space: Tradewind
+          output_path: output
+          push_package_ids: parsedmarc
+          push_version: ${{ steps.version.outputs.timestamp }}
+          push_overwrite_mode: OverwriteExisting
+
+      - name: Package Parsedmarc
+        run: |
+          octo pack --id="parsedmarc" --format="Zip" --version="${{ steps.version.outputs.timestamp }}" --basePath="octopus/dist" --outFolder="output/"
+
+      - name: Push Parsedmarc packages
+        uses: OctopusDeploy/push-package-action@v3
+        with:
+          api_key: ${{ secrets.OCTOPUS_API_KEY }}
+          server: https://tradewind.octopus.app
+          packages: "output/parsedmarc.${{ steps.version.outputs.timestamp }}.zip"
+          space: Tradewind
+          overwrite_mode: OverwriteExisting%   
