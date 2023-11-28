@@ -10,4 +10,4 @@ RUN apk add --update --no-cache --virtual .build_deps build-base libffi-dev \
 COPY parsedmarc/parsedmarc.ini /app/parsedmarc.ini
 #COPY GeoLite2-Country.mmdb /usr/share/GeoIP/GeoLite2-Country.mmdb
 
-ENTRYPOINT [ "parsedmarc", "-c", "/app/parsedmarc.ini", "/app/input/*", "--debug" ]
+ENTRYPOINT [ "parsedmarc", "-c", "/app/parsedmarc.ini", "--debug" ]
