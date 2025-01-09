@@ -9,6 +9,8 @@ services:
     depends_on:
       - elasticsearch
     restart: on-failure
+    networks:
+      - monitoring_network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.5
@@ -16,6 +18,13 @@ services:
       - discovery.type=single-node
     volumes:
       - ./elastic_data:/usr/share/elasticsearch/data
+    networks:
+      - monitoring_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   grafana:
     build: ./grafana/
@@ -25,3 +34,8 @@ services:
     environment:
       GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
+    networks:
+      - monitoring_network
+
+networks:
+  monitoring_network:
