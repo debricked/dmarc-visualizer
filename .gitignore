@@ -1,5 +1,6 @@
-/files/
-/output_files/
-/parsedmarc/GeoLite2-Country*
-/elastic_data/
-parsedmarc.ini
+/elastic_data/*
+!/elastic_data/.gitkeep
+/input_files/*
+!/input_files/.gitkeep
+/output_files/*
+!/output_files/.gitkeep
